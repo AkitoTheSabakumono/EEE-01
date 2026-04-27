@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЭЕШ English Mock Test #1 — AnthonyTheSabakumono</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --surface2: #181818;
+    --surface3: #202020;
+    --border: #2A2A2A;
+    --gold: #C9A84C;
+    --gold-bright: #E8C96A;
+    --gold-dim: #7A5E28;
+    --gold-glow: rgba(201,168,76,0.12);
+    --text: #F0EDE4;
+    --text-dim: #7A7670;
+    --text-hint: #3A3834;
+    --green: #6A9A5A;
+    --red: #A84848;
+    --radius: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 52px;
+  }
+  .brand { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+  .header-meta { display: flex; align-items: center; gap: 16px; }
+  .progress-label { font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+  .progress-track { width: 120px; height: 2px; background: var(--border); border-radius: 1px; }
+  .progress-bar { height: 100%; background: var(--gold); border-radius: 1px; transition: width 0.4s ease; width: 0%; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 64px 24px 40px;
+    max-width: 760px; margin: 0 auto;
+    text-align: center;
+  }
+  .mock-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-glow); border: 1px solid var(--gold-dim);
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 11px; font-family: 'DM Mono', monospace; color: var(--gold);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero-sub { color: var(--text-dim); font-size: 14px; max-width: 480px; margin: 0 auto 28px; }
+  .stats-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--gold); }
+  .stat-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    max-width: 760px; margin: 0 auto 40px;
+    padding: 0 24px;
+  }
+  .instr-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;
+  }
+  .instr-item { display: flex; gap: 10px; align-items: flex-start; }
+  .instr-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .instr-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .instr-text strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* ── SECTION BLOCK ── */
+  .section-wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .section-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 48px 0 24px;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .section-badge {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 20px;
+    border: 1px solid var(--gold-dim);
+    background: var(--gold-glow);
+  }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold-dim); }
+  .section-name { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--gold); }
+  .section-count { font-size: 11px; color: var(--text-dim); }
+  .section-instr { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; border-left: 2px solid var(--gold-dim); padding-left: 12px; }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: var(--gold-dim); }
+  .q-card.answered { border-color: var(--gold-dim); background: var(--surface2); }
+  .q-card.correct { border-color: var(--green) !important; background: rgba(106,154,90,0.05) !important; }
+  .q-card.wrong { border-color: var(--red) !important; background: rgba(168,72,72,0.05) !important; }
+  .q-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .q-num-badge {
+    background: var(--surface3); border: 1px solid var(--border);
+    border-radius: 4px; padding: 3px 8px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim);
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .q-text { font-size: 14.5px; color: var(--text); line-height: 1.55; }
+  .q-text .blank {
+    display: inline-block;
+    min-width: 80px; height: 1px;
+    background: var(--gold-dim); vertical-align: middle;
+    margin: 0 4px; position: relative; top: -4px;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 6px; }
+  .opt-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 9px 14px;
+    cursor: pointer; text-align: left;
+    transition: all 0.15s; font-family: 'Outfit', sans-serif; font-size: 13.5px; color: var(--text);
+    width: 100%;
+  }
+  .opt-btn:hover { border-color: var(--gold-dim); background: var(--surface3); }
+  .opt-btn.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold-bright); }
+  .opt-btn.reveal-correct { border-color: var(--green) !important; background: rgba(106,154,90,0.12) !important; color: #8aba78 !important; }
+  .opt-btn.reveal-wrong { border-color: var(--red) !important; background: rgba(168,72,72,0.1) !important; color: #c07070 !important; }
+  .opt-letter {
+    width: 22px; height: 22px; border-radius: 3px;
+    background: var(--surface3); border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .opt-btn.selected .opt-letter { background: var(--gold); border-color: var(--gold); color: #1a1000; }
+  .opt-btn.reveal-correct .opt-letter { background: var(--green); border-color: var(--green); color: #fff; }
+  .opt-btn.reveal-wrong .opt-letter { background: var(--red); border-color: var(--red); color: #fff; }
+
+  /* ── READING PASSAGE ── */
+  .passage-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--gold-dim);
+    border-radius: var(--radius); padding: 22px 24px;
+    margin-bottom: 20px;
+    font-size: 14px; line-height: 1.8; color: var(--text-dim);
+  }
+  .passage-card p { margin-bottom: 12px; }
+  .passage-card p:last-child { margin-bottom: 0; }
+  .passage-title { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--text); margin-bottom: 14px; }
+
+  /* ── SUBMIT ── */
+  .submit-wrap { max-width: 760px; margin: 48px auto; padding: 0 24px; }
+  .submit-btn {
+    width: 100%; padding: 16px;
+    background: var(--gold); border: none; border-radius: 6px;
+    font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600;
+    color: #1a1000; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+  .answered-status { text-align: center; margin-top: 12px; font-size: 13px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+
+  /* ── RESULTS ── */
+  .results { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; display: none; }
+  .result-hero {
+    text-align: center; padding: 48px 24px 36px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+  }
+  .result-hero::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .result-score-big { font-family: 'DM Serif Display', serif; font-size: 72px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .result-score-label { font-size: 12px; color: var(--text-dim); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+  .result-band { font-size: 16px; color: var(--text); margin-top: 14px; font-family: 'DM Serif Display', serif; }
+  .result-raw { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+
+  .breakdown-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 16px; }
+  .bk-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; text-align: center;
+  }
+  .bk-num { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); }
+  .bk-pct { font-size: 11px; color: var(--gold); font-family: 'DM Mono', monospace; }
+  .bk-label { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  .advice-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--gold); border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 16px;
+  }
+  .advice-title { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .advice-text { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; }
+
+  .reset-btn {
+    width: 100%; padding: 12px; background: transparent;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--text-dim);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .reset-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-row { gap: 20px; }
+    .instr-card { grid-template-columns: 1fr; }
+    .breakdown-grid { grid-template-columns: repeat(3,1fr); }
+    .header-meta .timer { display: none; }
+  }
+
+  /* ── SCROLL TO TOP ── */
+  .scroll-top {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--gold); border: none; cursor: pointer;
+    color: #1a1000; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
+  }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="brand">AnthonyTheSabakumono</div>
+  <div class="header-meta">
+    <span class="progress-label" id="hdr-progress">0 / 45</span>
+    <div class="progress-track"><div class="progress-bar" id="hdr-bar"></div></div>
+    <span class="timer" id="timer">80:00</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="mock-tag"> АНГЛИ ХЭЛ ЭЕШ Mock шалгалт · #001</div>
+  <h1>АНГЛИ ХЭЛ ЭЕШ<br><em>БҮРЭН ДУУРАЙЛГАСАН</em></h1>
+  <p class="hero-sub">Сүүлийн 10 жилийн ЭЕШ-д үндэслэн ижил зүй тогтол, ижил түвшинд, жинхэнэ ЭЕШ мэт дуурайлган хийсэн болно</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">45</div><div class="stat-label">Асуултууд</div></div>
+    <div class="stat"><div class="stat-num">80</div><div class="stat-label">Минут</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Хэсэг</div></div>
+    <div class="stat"><div class="stat-num">200–800</div><div class="stat-label">Онооны хил</div></div>
+  </div>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="instructions">
+  <div class="instr-card">
+    <div class="instr-item">
+      <div class="instr-icon">📋</div>
+      <div class="instr-text">
+        <strong>Зөвхөн нэг хариулт</strong>
+        Зөв гэж үзсэн нэг л хариултыг сонгоно.
+      </div>
+    </div>
+
+    <div class="instr-item">
+      <div class="instr-icon">⏱</div>
+      <div class="instr-text">
+        <strong>80 минут</strong>
+        Анхныхаа хариултыг сонгосон цагаас эхлээд цаг явж эхэлнэ
+      </div>
+    </div>
+
+    <div class="instr-item">
+      <div class="instr-icon">📖</div>
+      <div class="instr-text">
+        <strong>Унших хэсэг</strong>
+        3-р хэсэгт хариулхаасаа өмнө унших эхийг сайтар уншина
+      </div>
+    </div>
+
+    <div class="instr-item">
+      <div class="instr-icon">✅</div>
+      <div class="instr-text">
+        <strong>Оноо харах</strong>
+        Бүх асуултандаа хариулаад "ОНОО ХАРАХ" товчин дээр дарж оноогоо харна
+      </div>
+    </div>
+
+    <div class="instr-item">
+      <div class="instr-icon">🔔</div>
+      <div class="instr-text">
+        <strong>Subscribe</strong>
+        Оноогоо харчихаад сувагаа дагахаа мартваа
+      </div>
+    </div>
+
+    <div class="instr-item">
+      <div class="instr-icon">🔗</div>
+      <div class="instr-text">
+        <strong>Share</strong>
+        Цааш нь түгээхээ мартваа
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="section-wrap" id="quiz-wrap">
+
+  <!-- SECTION 1: GRAMMAR -->
+  <div class="section-divider">
+    <div class="section-badge">
+      <span class="section-num">01</span>
+      <span class="section-name"> Grammar - Дүрэм</span>
+      <span class="section-count">· 20 Асуулт</span>
+    </div>
+  </div>
+  <p class="section-instr">Choose the word or phrase that best completes each sentence - Өгүүлбэр бүрийг утгийн хувьд хамгийн бүрэн болгох үг эсвэл өгүүлбэрийг сонго</p>
+  <div id="grammar-qs"></div>
+
+  <!-- SECTION 2: VOCABULARY -->
+  <div class="section-divider">
+    <div class="section-badge">
+      <span class="section-num">02</span>
+      <span class="section-name"> Vocabulary - Шинэ үг</span>
+      <span class="section-count">· 15 Асуулт</span>
+    </div>
+  </div>
+  <p class="section-instr">Choose the word or phrase that best fits the meaning of the sentence - Өгүүлбэрт тохирох хамгийн оновчтой үг эсвэл өгүүлбэрийг сонго</p>
+  <div id="vocab-qs"></div>
+
+  <!-- SECTION 3: READING -->
+  <div class="section-divider">
+    <div class="section-badge">
+      <span class="section-num">03</span>
+      <span class="section-name"> Reading Comprehension - Уншиж ойлгох</span>
+      <span class="section-count">· 10 questions</span>
+    </div>
+  </div>
+  <p class="section-instr">Read both passages carefully, then answer the questions that follow - Хоёр эхийг сайтар уншаад тус тусынх нь асуулт бүрт хариул</p>
+
+  <!-- PASSAGE A -->
+  <div class="passage-card">
+    <div class="passage-title">Passage A — The Science of Sleep</div>
+    <p>For centuries, sleep was considered a passive state — a time when the body simply shut down and rested. Modern neuroscience has completely overturned this assumption. During sleep, particularly during the deep stages, the brain is extraordinarily active. It consolidates memories formed during the day, processes emotional experiences, and clears out toxic proteins that accumulate during waking hours.</p>
+    <p>Research conducted at the University of Rochester revealed that the brain has a dedicated cleaning system called the glymphatic system, which becomes ten times more active during sleep. This system flushes cerebrospinal fluid through the brain, removing waste products including beta-amyloid, a protein associated with Alzheimer's disease. Scientists now believe that chronic sleep deprivation may be a significant contributing factor to the development of neurodegenerative diseases.</p>
+    <p>Beyond the physical benefits, adequate sleep profoundly affects cognitive performance. Students who sleep fewer than six hours before an exam consistently perform worse than those who sleep seven to nine hours, regardless of total study time. This suggests that studying until the early hours of the morning — a common practice among exam candidates — may be counterproductive. The brain needs sleep not merely to rest, but to learn.</p>
+  </div>
+  <div id="reading-a-qs"></div>
+
+  <!-- PASSAGE B -->
+  <div class="passage-card" style="margin-top:24px;">
+    <div class="passage-title">Passage B — Urban Farming: Growing Up</div>
+    <p>As cities expand and agricultural land diminishes, a growing number of urban planners and entrepreneurs are looking skyward for solutions. Vertical farming — the practice of growing crops in stacked layers inside controlled indoor environments — has moved from a futuristic concept to a practical reality in cities from Tokyo to New York.</p>
+    <p>Proponents argue that vertical farms offer significant advantages over conventional agriculture. They use up to 95% less water through recirculation systems, require no pesticides due to the controlled environment, and can produce harvests year-round regardless of weather conditions. A single vertical farm occupying one city block can reportedly match the output of many hectares of traditional farmland.</p>
+    <p>Critics, however, point to the enormous energy costs involved. Vertical farms rely entirely on artificial lighting, which currently makes them economically viable only for high-value crops such as leafy greens and herbs. Scaling the technology to produce staple crops like wheat or rice remains, for now, economically unfeasible. Nevertheless, as renewable energy costs continue to fall, many experts predict that vertical farming will play an increasingly important role in global food security.</p>
+  </div>
+  <div id="reading-b-qs"></div>
+
+</div>
+
+<!-- SUBMIT -->
+<div class="submit-wrap">
+  <button class="submit-btn" id="submit-btn" onclick="submitTest()" disabled>
+     ЭЕШ ОНОО ХАРАХ →
+  </button>
+  <div class="answered-status" id="answered-status">Бүх 45 асуултанд хариулсан эсэхээ нягтлаарай!</div>
+</div>
+
+<!-- RESULTS -->
+<div class="results" id="results">
+  <div class="result-hero">
+    <div class="result-score-big" id="res-scaled">—</div>
+    <div class="result-score-label">Таны ЭЕШ оноо (200–800)</div>
+    <div class="result-band" id="res-band"></div>
+    <div class="result-raw" id="res-raw"></div>
+  </div>
+  <div class="breakdown-grid">
+    <div class="bk-card"><div class="bk-num" id="bk-gr">—</div><div class="bk-pct" id="bk-gr-pct"></div><div class="bk-label">Grammar</div></div>
+    <div class="bk-card"><div class="bk-num" id="bk-vc">—</div><div class="bk-pct" id="bk-vc-pct"></div><div class="bk-label">Vocabulary</div></div>
+    <div class="bk-card"><div class="bk-num" id="bk-rd">—</div><div class="bk-pct" id="bk-rd-pct"></div><div class="bk-label">Reading</div></div>
+  </div>
+  <div class="advice-card">
+    <div class="advice-title"> Anthony's Analysis</div>
+    <div class="advice-text" id="res-advice"></div>
+  </div>
+  <button class="reset-btn" onclick="resetTest()">↺ Ахин өгөх</button>
+</div>
+
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── QUESTION DATA ────────────────────────────────────────────────
+const grammarQs = [
+  // Articles
+  { q: "She was the only student in the class _____ had read the entire book.", opts:["A) which","B) who","C) whose","D) whom"], ans:"B", section:"gr" },
+  { q: "I've been waiting for _____ hour and a half. This is _____ longest wait I've ever had.", opts:["A) a / the","B) an / the","C) an / a","D) the / a"], ans:"B", section:"gr" },
+  { q: "He wanted to buy _____ new laptop, but he didn't have _____ money.", opts:["A) a / any","B) the / some","C) a / some","D) the / any"], ans:"A", section:"gr" },
+
+  // Conditionals
+  { q: "If she _____ harder last semester, she _____ the entrance exam.", opts:["A) studied / would pass","B) had studied / would have passed","C) had studied / would pass","D) studied / would have passed"], ans:"B", section:"gr" },
+  { q: "Unless you _____ your registration by Friday, you _____ not be allowed to sit the exam.", opts:["A) complete / will","B) will complete / will","C) completed / would","D) had completed / would"], ans:"A", section:"gr" },
+  { q: "I wish I _____ to the concert with you last night. It sounds like it was amazing.", opts:["A) could go","B) went","C) could have gone","D) had went"], ans:"C", section:"gr" },
+
+  // Passive Voice
+  { q: "The new library _____ by the end of next year, according to city officials.", opts:["A) will complete","B) will be completed","C) is completing","D) has been completed"], ans:"B", section:"gr" },
+  { q: "Scientists believe the ancient city _____ by a massive earthquake around 700 AD.", opts:["A) destroyed","B) was destroying","C) was destroyed","D) has destroyed"], ans:"C", section:"gr" },
+
+  // Reported Speech
+  { q: "\"I have never visited Mongolia,\" she said. → She said that she _____ Mongolia.", opts:["A) has never visited","B) had never visited","C) never visited","D) would never visit"], ans:"B", section:"gr" },
+  { q: "The teacher asked the students _____ their phones away during the examination.", opts:["A) put","B) to put","C) putting","D) that they put"], ans:"B", section:"gr" },
+
+  // Tenses
+  { q: "By the time the ambulance arrived, the patient _____ already _____ consciousness.", opts:["A) has / lost","B) had / been losing","C) had / lost","D) was / losing"], ans:"C", section:"gr" },
+  { q: "I _____ this novel for three weeks, and I'm only halfway through it.", opts:["A) read","B) have been reading","C) am reading","D) was reading"], ans:"B", section:"gr" },
+  { q: "When I was a child, my grandmother _____ stories every night before bed.", opts:["A) tells","B) has told","C) would tell","D) has been telling"], ans:"C", section:"gr" },
+
+  // Tag Questions
+  { q: "Nobody called while I was out, _____?", opts:["A) did they","B) didn't they","C) did nobody","D) didn't he"], ans:"A", section:"gr" },
+  { q: "Let's take a short break before the next session, _____?", opts:["A) shall we","B) will we","C) don't we","D) won't we"], ans:"A", section:"gr" },
+
+  // Modal Verbs
+  { q: "You _____ have told me you were going to be late — I was worried sick!", opts:["A) should","B) must","C) could","D) would"], ans:"A", section:"gr" },
+  { q: "The lights are off and the car is gone. They _____ have left already.", opts:["A) should","B) must","C) can","D) would"], ans:"B", section:"gr" },
+
+  // Gerund vs Infinitive
+  { q: "I really don't mind _____ late if it means the project will be finished properly.", opts:["A) to work","B) working","C) work","D) to working"], ans:"B", section:"gr" },
+  { q: "She finally managed _____ a scholarship to study abroad after three attempts.", opts:["A) winning","B) to win","C) win","D) to winning"], ans:"B", section:"gr" },
+
+  // Relative Clauses / Comparatives
+  { q: "The city _____ she grew up in has changed beyond recognition over the past decade.", opts:["A) which","B) what","C) where","D) whose"], ans:"A", section:"gr" },
+];
+
+const vocabQs = [
+  // Word choice / collocation
+  { q: "The scientist's findings were _____ — they completely changed the way researchers understood the disease.", opts:["A) groundbreaking","B) grounded","C) groundless","D) grounding"], ans:"A", section:"vc" },
+  { q: "After hours of debate, the committee finally reached a _____ on the new policy.", opts:["A) conclusion","B) consensus","C) consequence","D) concession"], ans:"B", section:"vc" },
+  { q: "The documentary _____ the struggles of families living below the poverty line.", opts:["A) depicted","B) decided","C) deployed","D) declined"], ans:"A", section:"vc" },
+  { q: "He made a _____ effort to stay calm during the argument, though he was clearly upset.", opts:["A) visible","B) conscious","C) notable","D) sincere"], ans:"B", section:"vc" },
+  { q: "The new regulation will _____ companies to disclose their environmental impact annually.", opts:["A) request","B) encourage","C) require","D) permit"], ans:"C", section:"vc" },
+
+  // Phrasal Verbs
+  { q: "After months of poor sales, the company had to _____ several of its international branches.", opts:["A) shut down","B) shut off","C) shut up","D) shut out"], ans:"A", section:"vc" },
+  { q: "The professor told students to _____ the report before submitting it for final grading.", opts:["A) go over","B) go around","C) go through","D) go away"], ans:"A", section:"vc" },
+  { q: "The negotiations almost broke down, but both sides managed to _____ their differences.", opts:["A) get over","B) get through","C) get into","D) get across"], ans:"A", section:"vc" },
+
+  // Prepositions / Word forms
+  { q: "The success of the project depended entirely _____ the team's ability to communicate effectively.", opts:["A) in","B) by","C) on","D) at"], ans:"C", section:"vc" },
+  { q: "Doctors are concerned about the _____ rate of obesity among teenagers in urban areas.", opts:["A) risen","B) rising","C) raised","D) arise"], ans:"B", section:"vc" },
+  { q: "The documentary provided a _____ account of the events leading up to the disaster.", opts:["A) detailing","B) detailed","C) detail","D) details"], ans:"B", section:"vc" },
+  { q: "It took great _____ to keep practicing every day without seeing immediate results.", opts:["A) persistent","B) persist","C) persistence","D) persistently"], ans:"C", section:"vc" },
+
+  // Synonyms in context
+  { q: "The speaker's argument was so _____ that even his opponents found it difficult to disagree.", opts:["A) forceful","B) forcible","C) compelling","D) compelled"], ans:"C", section:"vc" },
+  { q: "Many students find it difficult to _____ their part-time jobs with their academic responsibilities.", opts:["A) manage","B) balance","C) handle","D) control"], ans:"B", section:"vc" },
+  { q: "The government announced plans to _____ the healthcare system with an additional $2 billion.", opts:["A) reinforce","B) reform","C) renovate","D) revive"], ans:"B", section:"vc" },
+];
+
+const readingAQs = [
+  { q: "According to the passage, modern neuroscience has shown that during sleep, the brain:", opts:["A) shuts down completely to conserve energy","B) processes and removes harmful substances","C) stops forming new memories","D) becomes less active than during the day"], ans:"B", section:"rd" },
+  { q: "The word 'consolidates' in paragraph 1 most closely means:", opts:["A) creates for the first time","B) deletes unnecessary information","C) strengthens and organizes","D) transfers to long-term storage immediately"], ans:"C", section:"rd" },
+  { q: "The glymphatic system described in the passage is primarily responsible for:", opts:["A) generating new brain cells during sleep","B) controlling the depth of sleep cycles","C) cleaning waste products from the brain","D) regulating emotional responses"], ans:"C", section:"rd" },
+  { q: "What does the passage suggest about students who study until very late before an exam?", opts:["A) Their results are unpredictable","B) They may actually perform worse due to lack of sleep","C) They consistently outperform well-rested students","D) Their performance depends only on total study time"], ans:"B", section:"rd" },
+  { q: "Which statement best expresses the main idea of the passage?", opts:["A) Sleep deprivation causes Alzheimer's disease","B) Students should never study at night","C) Sleep is an active, essential process for both physical and cognitive health","D) The brain needs more than nine hours of sleep to function properly"], ans:"C", section:"rd" },
+];
+
+const readingBQs = [
+  { q: "According to the passage, which of the following is an advantage of vertical farming?", opts:["A) It produces staple crops more cheaply than traditional farms","B) It operates without any electricity","C) It can produce food regardless of seasonal weather","D) It is already economically competitive with wheat farming"], ans:"C", section:"rd" },
+  { q: "The word 'viable' in paragraph 3 most closely means:", opts:["A) expensive","B) profitable and workable","C) environmentally friendly","D) technologically advanced"], ans:"B", section:"rd" },
+  { q: "Critics of vertical farming are mainly concerned about:", opts:["A) the taste quality of vertically farmed produce","B) the high consumption of water","C) the significant energy requirements","D) the limited variety of crops that can be grown indoors"], ans:"C", section:"rd" },
+  { q: "The passage implies that vertical farming's expansion is most likely to be influenced by:", opts:["A) government agricultural subsidies","B) changes in consumer preferences","C) developments in renewable energy technology","D) improvements in pesticide alternatives"], ans:"C", section:"rd" },
+  { q: "Which of the following best describes the author's attitude toward vertical farming?", opts:["A) Strongly opposed due to its environmental impact","B) Fully supportive without any reservations","C) Balanced — acknowledging both current limitations and future potential","D) Indifferent — presenting facts without any evaluation"], ans:"C", section:"rd" },
+];
+
+// ── STATE ────────────────────────────────────────────────────────
+const answers = {};
+let timerInterval = null;
+let secondsLeft = 80 * 60;
+let timerStarted = false;
+let submitted = false;
+const totalQ = grammarQs.length + vocabQs.length + readingAQs.length + readingBQs.length;
+
+// ── BUILD UI ─────────────────────────────────────────────────────
+function buildSection(questions, containerId, startNum) {
+  const container = document.getElementById(containerId);
+  questions.forEach((q, i) => {
+    const num = startNum + i;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${num}`;
+
+    const qText = q.q.replace('_____', '<span class="blank"></span>');
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num-badge">Q${num}</span>
+        <span class="q-text">${qText}</span>
+      </div>
+      <div class="options">
+        ${q.opts.map(opt => `
+          <button class="opt-btn" onclick="selectAnswer(${num}, '${opt.charAt(0)}', '${q.ans}', this, '${q.section}')">
+            <span class="opt-letter">${opt.charAt(0)}</span>
+            <span>${opt.substring(3)}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+buildSection(grammarQs, 'grammar-qs', 1);
+buildSection(vocabQs, 'vocab-qs', grammarQs.length + 1);
+buildSection(readingAQs, 'reading-a-qs', grammarQs.length + vocabQs.length + 1);
+buildSection(readingBQs, 'reading-b-qs', grammarQs.length + vocabQs.length + readingAQs.length + 1);
+
+// ── INTERACTION ──────────────────────────────────────────────────
+function selectAnswer(num, chosen, correct, btn, section) {
+  if (submitted) return;
+  if (!timerStarted) startTimer();
+
+  // Deselect others in this question
+  const card = document.getElementById(`card-${num}`);
+  card.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  card.classList.add('answered');
+
+  answers[num] = { chosen, correct, section };
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  const pct = (count / totalQ) * 100;
+  document.getElementById('hdr-bar').style.width = pct + '%';
+  document.getElementById('hdr-progress').textContent = `${count} / ${totalQ}`;
+
+  if (count === totalQ) {
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('answered-status').textContent = '✓ All answered — ready to submit';
+  } else {
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('answered-status').textContent = `${count} of ${totalQ} answered`;
+  }
+}
+
+// ── TIMER ────────────────────────────────────────────────────────
+function startTimer() {
+  timerStarted = true;
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    const display = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    document.getElementById('timer').textContent = display;
+    if (secondsLeft <= 300) document.getElementById('timer').style.color = '#A84848';
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+  }, 1000);
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────
+function submitTest() {
+  submitted = true;
+  clearInterval(timerInterval);
+
+  // Reveal answers
+  let grCorrect = 0, vcCorrect = 0, rdCorrect = 0;
+
+  Object.entries(answers).forEach(([num, data]) => {
+    const card = document.getElementById(`card-${num}`);
+    card.querySelectorAll('.opt-btn').forEach(btn => {
+      const letter = btn.querySelector('.opt-letter').textContent;
+      if (letter === data.correct) btn.classList.add('reveal-correct');
+      else if (letter === data.chosen && data.chosen !== data.correct) btn.classList.add('reveal-wrong');
+      btn.classList.remove('selected');
+    });
+
+    const isCorrect = data.chosen === data.correct;
+    card.classList.remove('answered');
+    card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    if (isCorrect) {
+      if (data.section === 'gr') grCorrect++;
+      else if (data.section === 'vc') vcCorrect++;
+      else if (data.section === 'rd') rdCorrect++;
+    }
+  });
+
+  // Score calc — weighted: grammar 40%, vocab 30%, reading 30%
+  const grPct = grCorrect / grammarQs.length;
+  const vcPct = vcCorrect / vocabQs.length;
+  const rdPct = rdCorrect / (readingAQs.length + readingBQs.length);
+  const weighted = grPct * 0.4 + vcPct * 0.3 + rdPct * 0.3;
+  const scaled = Math.round(200 + weighted * 600);
+  const totalCorrect = grCorrect + vcCorrect + rdCorrect;
+
+  // Show results
+  document.getElementById('res-scaled').textContent = scaled;
+  document.getElementById('res-raw').textContent = `${totalCorrect} / ${totalQ} correct`;
+
+  let band, advice;
+  if (scaled >= 700) {
+    band = "🏆 Гайхалтай — ойролцоогоор Top 5%";
+    advice = `Маш сайн! ${scaled} оноо — энэ бол шилдэг оюутнуудын түвшин. Grammar: ${grCorrect}/${grammarQs.length}, Vocabulary: ${vcCorrect}/${vocabQs.length}, Reading: ${rdCorrect}/10. Алдсан асуултуудаа дахин харж, яг ямар grammar rule дутсаныг тодорлоо. Энэ түвшнийхэд IELTS 6.5+ хялбар байх болно.`;
+  } else if (scaled >= 580) {
+    band = "👍 Strong — Юу ч гэсэн Их сургуульд орох нь";
+    advice = `Сайн байна! ${scaled} оноо — их сургуульд элсэхэд хангалттай. Grammar-д ${grCorrect}/${grammarQs.length} авлаа. Хамгийн их алдаа гарсан хэсгийг дахин давт. 2 долоо хоног дасгал хийвэл 650+ авах боломжтой.`;
+  } else if (scaled >= 450) {
+    band = "📚 Developing — Төвлөрч бэлдэх хэрэгтэй";
+    advice = `Бүү санаа зов — ${scaled} оноо авлаа. Grammar (${grCorrect}/${grammarQs.length}), Vocabulary (${vcCorrect}/${vocabQs.length}), Reading (${rdCorrect}/10). Манай сувгаас хичээл үзэж, эсвэл өөр хүссэн даалгаврууд дагнан хий. 1 сар бэлдвэл 100+ оноо нэмэгдэнэ.`;
+  } else {
+    band = "💪 Beginner — Хэн бүхэнд эхлэл байдаг";
+    advice = `${scaled} оноо авлаа. Grammar (${grCorrect}/${grammarQs.length}): Энэ бол хамгийн чухал хэсэг. Нийт оноо grammar-аас их шалтгаалдаг. Articles, conditionals, tenses-аас эхэл. Өдөр бүр нэг grammar video үзэж, энэ тестийг 3 долоо хоногийн дараа дахин хий.`;
+  }
+
+  document.getElementById('res-band').textContent = band;
+  document.getElementById('res-advice').textContent = advice;
+
+  document.getElementById('bk-gr').textContent = `${grCorrect}/${grammarQs.length}`;
+  document.getElementById('bk-gr-pct').textContent = Math.round(grPct*100) + '%';
+  document.getElementById('bk-vc').textContent = `${vcCorrect}/${vocabQs.length}`;
+  document.getElementById('bk-vc-pct').textContent = Math.round(vcPct*100) + '%';
+  document.getElementById('bk-rd').textContent = `${rdCorrect}/10`;
+  document.getElementById('bk-rd-pct').textContent = Math.round(rdPct*100) + '%';
+
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── RESET ────────────────────────────────────────────────────────
+function resetTest() {
+  submitted = false;
+  timerStarted = false;
+  secondsLeft = 80 * 60;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = '80:00';
+  document.getElementById('timer').style.color = '';
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('grammar-qs').innerHTML = '';
+  document.getElementById('vocab-qs').innerHTML = '';
+  document.getElementById('reading-a-qs').innerHTML = '';
+  document.getElementById('reading-b-qs').innerHTML = '';
+  buildSection(grammarQs, 'grammar-qs', 1);
+  buildSection(vocabQs, 'vocab-qs', grammarQs.length + 1);
+  buildSection(readingAQs, 'reading-a-qs', grammarQs.length + vocabQs.length + 1);
+  buildSection(readingBQs, 'reading-b-qs', grammarQs.length + vocabQs.length + readingAQs.length + 1);
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'block';
+  document.getElementById('submit-btn').disabled = true;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SCROLL TOP BUTTON ────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  btn.classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
